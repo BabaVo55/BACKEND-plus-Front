@@ -1,0 +1,20 @@
+### GET / 
+GET http://localhost:8081
+
+
+### Register a user POST /AUTH/REGISTER
+POST http://localhost:8081/auth/register
+Content-Type: application/json
+
+{
+    "username": "test",
+    "password": "password"
+}
+
+### Login a user POST /AUTH/LOGIN 
+POST http://localhost:8081/auth/login
+Content-Type: application/json
+{
+    "username": "test",
+    "password": "password"
+}

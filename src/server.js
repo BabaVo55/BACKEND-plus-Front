@@ -2,8 +2,11 @@
 import express from 'express';
 import path, {dirname} from 'path';
 import {fileURLToPath} from 'url';
-const app = express();
+import authRoutes from './routes/authRoutes.js';
+import todoRoutes from './routes/todoRoutes.js';
 
+
+const app = express();
 
 const PORT = process.env.PORT || 8080;
 
@@ -27,7 +30,11 @@ app.get('/', (req, res) => {
     // res.sendFile(path.join(__dirname, '../public', 'index.html'))
 
     res.sendFile(path.join(__dirname, '/public', 'index.html'))
-    
 })
-console.log('hellow wordl')
-app.listen(PORT, () => console.log('8080 plugged in'))
+
+// Routers
+app.use('/auth', authRoutes);
+app.use('/todo', todoRoutes);
+
+console.log('hello world')
+app.listen(PORT, () => console.log(`${PORT} plugged in`))
