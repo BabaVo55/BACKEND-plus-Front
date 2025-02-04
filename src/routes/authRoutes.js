@@ -26,6 +26,7 @@ router.post('/register', (req, res) => {
 
         // create a token
         const token = jwt.sign({id: result.lastInsertRowid}, process.env.JWT_SECRET, {expiresIn: `24`})
+        res.json({token})
     }catch(error){
         console.log(error.message)
         res.sendStatus(503)
@@ -39,7 +40,18 @@ router.post('/register', (req, res) => {
 })
 
 router.post('/login', (req, res) => {
-    
+    const {username, password} = req.body;
+
+    try {
+        const getUser = db.prepare('SELECT * FROM users WHERE username = ?')
+        const user = getUser.get(username);
+
+        if (!user){ return res.status(404).send({message: "USer 
+            not found"}) }
+    }catch(error){
+        console.log(error.message);
+        res.sendStatus(503)
+    }
 })
 
 export default router
