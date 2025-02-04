@@ -14,6 +14,7 @@ Content-Type: application/json
 ### Login a user POST /AUTH/LOGIN 
 POST http://localhost:8081/auth/login
 Content-Type: application/json
+
 {
     "username": "test",
     "password": "password"

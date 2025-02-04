@@ -44,10 +44,22 @@ router.post('/login', (req, res) => {
 
     try {
         const getUser = db.prepare('SELECT * FROM users WHERE username = ?')
+        
+        // Cant find valid username
         const user = getUser.get(username);
-
-        if (!user){ return res.status(404).send({message: "USer 
-            not found"}) }
+        if (!user){ return res.status(404).send({message: 
+            "USer not found"}) 
+        } 
+        // Cant find valid Password
+        const validPassword = bcrypt.compareSync(password, user.password)
+        if (!validPassword) { return res.status(401).send({message: 
+            "Invalid Password G"})
+        }
+        console.log(user)
+        // Successful authentication
+        const token = jwt.sign({id: user.id}, process.env.JWT_SECRET, 
+            {expiresIn: '24'})
+        res.json({token})
     }catch(error){
         console.log(error.message);
         res.sendStatus(503)
